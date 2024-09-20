@@ -33,7 +33,7 @@ public class JwtAuthenticationProvideFilter extends OncePerRequestFilter {
         try{
             final String jwt = authHeader.substring(7);
             final String username = service.extractUsername(jwt);
-            if(username == null){
+            if(username == null || SecurityContextHolder.getContext().getAuthentication() != null){
                 filterChain.doFilter(request, response);
                 return;
             }
