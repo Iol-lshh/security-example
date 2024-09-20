@@ -35,6 +35,9 @@ public class UserAuthenticationService {
     public LoginResult login(LoginCommand command) {
         User user = repository.findByLoginId(command.loginId())
                 .orElseThrow(() -> new UserAuthenticationException("존재하지 않는 아이디"));
+        if (!user.matchPassword(command.password())) {
+            throw new UserAuthenticationException("비밀번호가 일치하지 않습니다");
+        }
         String jwt = jwtManager.generateToken(user);
         return new LoginResult(jwt);
     }

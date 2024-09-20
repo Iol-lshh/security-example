@@ -39,4 +39,8 @@ public class User implements UserDetails {
     public String getUsername() {
         return this.loginId;
     }
+
+    public boolean matchPassword(String password) {
+        return this.password.equals(password);
+    }
 }
